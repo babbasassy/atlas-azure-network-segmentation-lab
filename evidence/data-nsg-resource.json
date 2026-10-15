@@ -1,0 +1,210 @@
+{
+  "name": "nsg-atlas-data",
+  "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data",
+  "type": "Microsoft.Network/networkSecurityGroups",
+  "location": "northeurope",
+  "tags": {
+    "LabPurpose": "ATLAS-Network-Segmentation"
+  },
+  "properties": {
+    "provisioningState": "Succeeded",
+    "securityRules": [
+      {
+        "name": "Allow-App-To-Data-SQL",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/securityRules/Allow-App-To-Data-SQL",
+        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "1433",
+          "sourceAddressPrefix": "10.42.1.0/24",
+          "destinationAddressPrefix": "10.42.2.0/24",
+          "priority": 100,
+          "description": "ATLAS lab: accept new SQL flows only from app subnet.",
+          "protocol": "TCP",
+          "access": "Allow",
+          "direction": "Inbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      },
+      {
+        "name": "Deny-All-Inbound",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/securityRules/Deny-All-Inbound",
+        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "*",
+          "sourceAddressPrefix": "*",
+          "destinationAddressPrefix": "*",
+          "priority": 1000,
+          "description": "ATLAS lab: deny other new inbound flows before default allows.",
+          "protocol": "*",
+          "access": "Deny",
+          "direction": "Inbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      },
+      {
+        "name": "Deny-All-Outbound",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/securityRules/Deny-All-Outbound",
+        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "*",
+          "sourceAddressPrefix": "*",
+          "destinationAddressPrefix": "*",
+          "priority": 1000,
+          "description": "ATLAS lab: no new outbound sessions from data tier.",
+          "protocol": "*",
+          "access": "Deny",
+          "direction": "Outbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      }
+    ],
+    "defaultSecurityRules": [
+      {
+        "name": "AllowVnetInBound",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/defaultSecurityRules/AllowVnetInBound",
+        "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "*",
+          "sourceAddressPrefix": "VirtualNetwork",
+          "destinationAddressPrefix": "VirtualNetwork",
+          "priority": 65000,
+          "description": "Allow inbound traffic from all VMs in VNET",
+          "protocol": "*",
+          "access": "Allow",
+          "direction": "Inbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      },
+      {
+        "name": "AllowAzureLoadBalancerInBound",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+        "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "*",
+          "sourceAddressPrefix": "AzureLoadBalancer",
+          "destinationAddressPrefix": "*",
+          "priority": 65001,
+          "description": "Allow inbound traffic from azure load balancer",
+          "protocol": "*",
+          "access": "Allow",
+          "direction": "Inbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      },
+      {
+        "name": "DenyAllInBound",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/defaultSecurityRules/DenyAllInBound",
+        "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "*",
+          "sourceAddressPrefix": "*",
+          "destinationAddressPrefix": "*",
+          "priority": 65500,
+          "description": "Deny all inbound traffic",
+          "protocol": "*",
+          "access": "Deny",
+          "direction": "Inbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      },
+      {
+        "name": "AllowVnetOutBound",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/defaultSecurityRules/AllowVnetOutBound",
+        "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "*",
+          "sourceAddressPrefix": "VirtualNetwork",
+          "destinationAddressPrefix": "VirtualNetwork",
+          "priority": 65000,
+          "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+          "protocol": "*",
+          "access": "Allow",
+          "direction": "Outbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      },
+      {
+        "name": "AllowInternetOutBound",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/defaultSecurityRules/AllowInternetOutBound",
+        "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "*",
+          "sourceAddressPrefix": "*",
+          "destinationAddressPrefix": "Internet",
+          "priority": 65001,
+          "description": "Allow outbound traffic from all VMs to Internet",
+          "protocol": "*",
+          "access": "Allow",
+          "direction": "Outbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      },
+      {
+        "name": "DenyAllOutBound",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data/defaultSecurityRules/DenyAllOutBound",
+        "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "sourcePortRange": "*",
+          "destinationPortRange": "*",
+          "sourceAddressPrefix": "*",
+          "destinationAddressPrefix": "*",
+          "priority": 65500,
+          "description": "Deny all outbound traffic",
+          "protocol": "*",
+          "access": "Deny",
+          "direction": "Outbound",
+          "sourcePortRanges": [],
+          "destinationPortRanges": [],
+          "sourceAddressPrefixes": [],
+          "destinationAddressPrefixes": []
+        }
+      }
+    ],
+    "subnets": [
+      {
+        "id": "/subscriptions/<subscription-id>/resourceGroups/RG-ATLAS-NETWORK-20261014/providers/Microsoft.Network/virtualNetworks/VNET-ATLAS-SEGMENTATION/subnets/SNET-DATA"
+      }
+    ]
+  }
+}

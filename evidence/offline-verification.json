@@ -1,0 +1,427 @@
+{
+  "generated_at_utc": "2026-10-15T11:26:00.940110+00:00",
+  "evidence_type": "offline evaluation of sanitized portal configuration; no packets or Azure API calls",
+  "source_sha256": {
+    "app-nsg-resource.json": "5dad49121879518613c8c5e718d828948dde9d4c2ce49f6c5ef9a59efb6dea49",
+    "data-nsg-resource.json": "c444213f061f148079774318d2afffa9f2b276c18782d593a5cc36cd16e0d82c",
+    "vnet-resource.json": "b506dc06058048dc1defaf9f82cb9c9d0d047a8d16a4c5aaf61788f834644ae7"
+  },
+  "passed": true,
+  "configuration_checks": [
+    {
+      "check": "VNet address space",
+      "passed": true
+    },
+    {
+      "check": "Exactly two named subnets",
+      "passed": true
+    },
+    {
+      "check": "No peering or paid DDoS plan configured",
+      "passed": true
+    },
+    {
+      "check": "app: succeeded in North Europe with lab tag",
+      "passed": true
+    },
+    {
+      "check": "data: succeeded in North Europe with lab tag",
+      "passed": true
+    },
+    {
+      "check": "vnet: succeeded in North Europe with lab tag",
+      "passed": true
+    },
+    {
+      "check": "app: subnet prefix",
+      "passed": true
+    },
+    {
+      "check": "app: default outbound disabled",
+      "passed": true
+    },
+    {
+      "check": "app: correct NSG binding",
+      "passed": true
+    },
+    {
+      "check": "app: no NAT or attached IP configurations",
+      "passed": true
+    },
+    {
+      "check": "app: reciprocal subnet binding",
+      "passed": true
+    },
+    {
+      "check": "app: no NIC binding",
+      "passed": true
+    },
+    {
+      "check": "app: exactly three custom rules",
+      "passed": true
+    },
+    {
+      "check": "app: unique direction-priority pairs",
+      "passed": true
+    },
+    {
+      "check": "app: all custom rules provisioned",
+      "passed": true
+    },
+    {
+      "check": "app: exactly the intended SQL allow",
+      "passed": true
+    },
+    {
+      "check": "app: catch-all Inbound deny at 1000",
+      "passed": true
+    },
+    {
+      "check": "app: catch-all Outbound deny at 1000",
+      "passed": true
+    },
+    {
+      "check": "app: custom rules precede defaults",
+      "passed": true
+    },
+    {
+      "check": "data: subnet prefix",
+      "passed": true
+    },
+    {
+      "check": "data: default outbound disabled",
+      "passed": true
+    },
+    {
+      "check": "data: correct NSG binding",
+      "passed": true
+    },
+    {
+      "check": "data: no NAT or attached IP configurations",
+      "passed": true
+    },
+    {
+      "check": "data: reciprocal subnet binding",
+      "passed": true
+    },
+    {
+      "check": "data: no NIC binding",
+      "passed": true
+    },
+    {
+      "check": "data: exactly three custom rules",
+      "passed": true
+    },
+    {
+      "check": "data: unique direction-priority pairs",
+      "passed": true
+    },
+    {
+      "check": "data: all custom rules provisioned",
+      "passed": true
+    },
+    {
+      "check": "data: exactly the intended SQL allow",
+      "passed": true
+    },
+    {
+      "check": "data: catch-all Inbound deny at 1000",
+      "passed": true
+    },
+    {
+      "check": "data: catch-all Outbound deny at 1000",
+      "passed": true
+    },
+    {
+      "check": "data: custom rules precede defaults",
+      "passed": true
+    }
+  ],
+  "modeled_flows": [
+    {
+      "name": "app-to-data-sql",
+      "source": "10.42.1.4",
+      "destination": "10.42.2.4",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 1433,
+      "expected": "Allow",
+      "access": "Allow",
+      "stages": [
+        {
+          "tier": "app",
+          "direction": "Outbound",
+          "access": "Allow",
+          "rule": "Allow-App-To-Data-SQL",
+          "priority": 100
+        },
+        {
+          "tier": "data",
+          "direction": "Inbound",
+          "access": "Allow",
+          "rule": "Allow-App-To-Data-SQL",
+          "priority": 100
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "app-to-data-other-port",
+      "source": "10.42.1.4",
+      "destination": "10.42.2.4",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 1434,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "app",
+          "direction": "Outbound",
+          "access": "Deny",
+          "rule": "Deny-All-Outbound",
+          "priority": 1000
+        },
+        {
+          "tier": "data",
+          "direction": "Inbound",
+          "access": "Deny",
+          "rule": "Deny-All-Inbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "app-to-data-udp",
+      "source": "10.42.1.4",
+      "destination": "10.42.2.4",
+      "protocol": "UDP",
+      "source_port": 50000,
+      "destination_port": 1433,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "app",
+          "direction": "Outbound",
+          "access": "Deny",
+          "rule": "Deny-All-Outbound",
+          "priority": 1000
+        },
+        {
+          "tier": "data",
+          "direction": "Inbound",
+          "access": "Deny",
+          "rule": "Deny-All-Inbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "data-to-app-new-sql",
+      "source": "10.42.2.4",
+      "destination": "10.42.1.4",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 1433,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "data",
+          "direction": "Outbound",
+          "access": "Deny",
+          "rule": "Deny-All-Outbound",
+          "priority": 1000
+        },
+        {
+          "tier": "app",
+          "direction": "Inbound",
+          "access": "Deny",
+          "rule": "Deny-All-Inbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "outside-to-data-sql",
+      "source": "192.0.2.10",
+      "destination": "10.42.2.4",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 1433,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "data",
+          "direction": "Inbound",
+          "access": "Deny",
+          "rule": "Deny-All-Inbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "app-to-outside-https",
+      "source": "10.42.1.4",
+      "destination": "198.51.100.10",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 443,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "app",
+          "direction": "Outbound",
+          "access": "Deny",
+          "rule": "Deny-All-Outbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "app-to-app-new-sql",
+      "source": "10.42.1.4",
+      "destination": "10.42.1.5",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 1433,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "app",
+          "direction": "Outbound",
+          "access": "Deny",
+          "rule": "Deny-All-Outbound",
+          "priority": 1000
+        },
+        {
+          "tier": "app",
+          "direction": "Inbound",
+          "access": "Deny",
+          "rule": "Deny-All-Inbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "data-to-outside-https",
+      "source": "10.42.2.4",
+      "destination": "198.51.100.10",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 443,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "data",
+          "direction": "Outbound",
+          "access": "Deny",
+          "rule": "Deny-All-Outbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "data-to-data-new-sql",
+      "source": "10.42.2.4",
+      "destination": "10.42.2.5",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 1433,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "data",
+          "direction": "Outbound",
+          "access": "Deny",
+          "rule": "Deny-All-Outbound",
+          "priority": 1000
+        },
+        {
+          "tier": "data",
+          "direction": "Inbound",
+          "access": "Deny",
+          "rule": "Deny-All-Inbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "outside-to-app-ssh",
+      "source": "192.0.2.10",
+      "destination": "10.42.1.4",
+      "protocol": "TCP",
+      "source_port": 50000,
+      "destination_port": 22,
+      "expected": "Deny",
+      "access": "Deny",
+      "stages": [
+        {
+          "tier": "app",
+          "direction": "Inbound",
+          "access": "Deny",
+          "rule": "Deny-All-Inbound",
+          "priority": 1000
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "mutation_checks": [
+    {
+      "mutation": "remove-app-allow",
+      "caught_by_config": [
+        "app: exactly three custom rules",
+        "app: exactly the intended SQL allow"
+      ],
+      "flow_mismatches": [
+        "app-to-data-sql"
+      ],
+      "passed": true
+    },
+    {
+      "mutation": "widen-both-allow-ports",
+      "caught_by_config": [
+        "app: exactly the intended SQL allow",
+        "data: exactly the intended SQL allow"
+      ],
+      "flow_mismatches": [
+        "app-to-data-other-port"
+      ],
+      "passed": true
+    },
+    {
+      "mutation": "allow-app-egress",
+      "caught_by_config": [
+        "app: exactly the intended SQL allow",
+        "app: catch-all Outbound deny at 1000"
+      ],
+      "flow_mismatches": [
+        "app-to-outside-https"
+      ],
+      "passed": true
+    },
+    {
+      "mutation": "enable-default-outbound",
+      "caught_by_config": [
+        "app: default outbound disabled"
+      ],
+      "flow_mismatches": [],
+      "passed": true
+    }
+  ]
+}

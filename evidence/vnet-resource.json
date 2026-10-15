@@ -1,0 +1,62 @@
+{
+  "name": "vnet-atlas-segmentation",
+  "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/virtualNetworks/vnet-atlas-segmentation",
+  "type": "Microsoft.Network/virtualNetworks",
+  "location": "northeurope",
+  "tags": {
+    "LabPurpose": "ATLAS-Network-Segmentation"
+  },
+  "properties": {
+    "provisioningState": "Succeeded",
+    "addressSpace": {
+      "addressPrefixes": [
+        "10.42.0.0/16"
+      ]
+    },
+    "encryption": {
+      "enabled": false,
+      "enforcement": "AllowUnencrypted"
+    },
+    "privateEndpointVNetPolicies": "Disabled",
+    "subnets": [
+      {
+        "name": "snet-app",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/virtualNetworks/vnet-atlas-segmentation/subnets/snet-app",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "addressPrefixes": [
+            "10.42.1.0/24"
+          ],
+          "networkSecurityGroup": {
+            "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-app"
+          },
+          "delegations": [],
+          "privateEndpointNetworkPolicies": "Disabled",
+          "privateLinkServiceNetworkPolicies": "Enabled",
+          "defaultOutboundAccess": false
+        },
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      {
+        "name": "snet-data",
+        "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/virtualNetworks/vnet-atlas-segmentation/subnets/snet-data",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "addressPrefixes": [
+            "10.42.2.0/24"
+          ],
+          "networkSecurityGroup": {
+            "id": "/subscriptions/<subscription-id>/resourceGroups/rg-atlas-network-20261014/providers/Microsoft.Network/networkSecurityGroups/nsg-atlas-data"
+          },
+          "delegations": [],
+          "privateEndpointNetworkPolicies": "Disabled",
+          "privateLinkServiceNetworkPolicies": "Enabled",
+          "defaultOutboundAccess": false
+        },
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      }
+    ],
+    "virtualNetworkPeerings": [],
+    "enableDdosProtection": false
+  }
+}

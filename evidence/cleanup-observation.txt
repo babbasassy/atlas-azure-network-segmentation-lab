@@ -1,0 +1,9 @@
+Observed in Azure portal on 2026-10-15; capture saved at 11:25:26 UTC.
+Source: resource-group view and notifications for rg-atlas-network-20261014.
+Selected visible text (UI indices and account details omitted):
+
+Showing 0 of 0
+Success notification with title Deleted resource group rg-atlas-network-20261014.
+Deleted resource group rg-atlas-network-20261014
+
+This is a portal observation excerpt, not an Activity Log export or API deletion response.

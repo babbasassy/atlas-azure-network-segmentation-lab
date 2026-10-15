@@ -1,0 +1,12 @@
+[
+  {"name":"app-to-data-sql", "source":"10.42.1.4", "destination":"10.42.2.4", "protocol":"TCP", "source_port":50000, "destination_port":1433, "expected":"Allow"},
+  {"name":"app-to-data-other-port", "source":"10.42.1.4", "destination":"10.42.2.4", "protocol":"TCP", "source_port":50000, "destination_port":1434, "expected":"Deny"},
+  {"name":"app-to-data-udp", "source":"10.42.1.4", "destination":"10.42.2.4", "protocol":"UDP", "source_port":50000, "destination_port":1433, "expected":"Deny"},
+  {"name":"data-to-app-new-sql", "source":"10.42.2.4", "destination":"10.42.1.4", "protocol":"TCP", "source_port":50000, "destination_port":1433, "expected":"Deny"},
+  {"name":"outside-to-data-sql", "source":"192.0.2.10", "destination":"10.42.2.4", "protocol":"TCP", "source_port":50000, "destination_port":1433, "expected":"Deny"},
+  {"name":"app-to-outside-https", "source":"10.42.1.4", "destination":"198.51.100.10", "protocol":"TCP", "source_port":50000, "destination_port":443, "expected":"Deny"},
+  {"name":"app-to-app-new-sql", "source":"10.42.1.4", "destination":"10.42.1.5", "protocol":"TCP", "source_port":50000, "destination_port":1433, "expected":"Deny"},
+  {"name":"data-to-outside-https", "source":"10.42.2.4", "destination":"198.51.100.10", "protocol":"TCP", "source_port":50000, "destination_port":443, "expected":"Deny"},
+  {"name":"data-to-data-new-sql", "source":"10.42.2.4", "destination":"10.42.2.5", "protocol":"TCP", "source_port":50000, "destination_port":1433, "expected":"Deny"},
+  {"name":"outside-to-app-ssh", "source":"192.0.2.10", "destination":"10.42.1.4", "protocol":"TCP", "source_port":50000, "destination_port":22, "expected":"Deny"}
+]
